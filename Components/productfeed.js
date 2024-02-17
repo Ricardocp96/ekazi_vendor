@@ -4,6 +4,7 @@ import { TextInput } from 'react-native-rapi-ui';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import {Button} from 'react-native-paper';
+import Navoptions from './Navoptions';
 export default function productfeed () {
 
   state = {
@@ -30,26 +31,24 @@ export default function productfeed () {
               keyboardType="email-address"
        
             />
-
-
+ 
+ <Navoptions></Navoptions>
 
        </View>
       
-
+      
  <View style={styles.buttons}>
  <View style={styles.sidebyside}>
  
   {/* add the family of buttons here */}
-     
   
-  <Button icon="camera" mode="elevated"  style={styles.space} onPress={() => console.log('Pressed')}>
-    Press me
-  </Button>
-  <Button icon="camera" mode="elevated"  style={styles.space} onPress={() => console.log('Pressed')}>
-    Press me
-  </Button>
+  
+  
+
   </View>
+ 
   </View>
+ 
       </View>
       
       
@@ -60,19 +59,19 @@ export default function productfeed () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center'
   },
 
   SecondContainer:{
     flex: 1,
-   // paddingTop: 16 + Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#ffffff',
     overflowX: 'hidden',
   },
   staticSection: {
     paddingHorizontal: 16,
+    
   },
 
   experiment:{
@@ -82,7 +81,9 @@ buttons:{
   
   padding: 10,
   borderRadius: 5,
-  width: 200, // Adjust the width to make the button smaller
+  paddingTop: 25,
+  width: 250, 
+  paddingLeft:30,
   alignItems: 'center',
 },
  sidebyside:{
@@ -92,6 +93,9 @@ buttons:{
     paddingHorizontal: 5, 
  },
  space:{
-  marginHorizontal: 10,
+  marginHorizontal: 15,
+ },
+ secondspace:{
+marginHorizontal:50,
  },
 });

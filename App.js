@@ -9,7 +9,7 @@ import Register from './Screens/register';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from "react-native-rapi-ui";
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,9 +29,8 @@ export default function App() {
   //TODO
 //rap this in an auth container 
 
-
   <NavigationContainer>
-
+<SafeAreaProvider>
 
 <ThemeProvider>
 
@@ -40,16 +39,21 @@ export default function App() {
 
 screenOptions={globalScreen}>
 
-<Stack.Screen     name = "Login" component={Login} />
-<Stack.Screen     name = "Home" component={homescreen} />
+<Stack.Screen     name = "Login" component={Login}
+options={{headerShown:false}}
+/>
+<Stack.Screen     name = "Home" component={homescreen}
+options={{headerShown:false}}
+/>
 <Stack.Screen     name = "Register" component={Register}/>
 
 </Stack.Navigator>
 
 </ThemeProvider>
 
-
+</SafeAreaProvider>
   </NavigationContainer>
+  
  )
     
   

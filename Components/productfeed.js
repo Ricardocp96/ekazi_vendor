@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import {Button} from 'react-native-paper';
 import Navoptions from './Navoptions';
+import tw from "twrnc";
 export default function productfeed () {
 
   state = {
@@ -19,12 +20,12 @@ export default function productfeed () {
       <View style={styles.SecondContainer}>
         <View style={styles.staticSection}>
         <TextInput
-              containerStyle={{ marginTop: 15 }}
+              containerStyle={{ marginTop: 56 }}
               placeholder="Search service"
               leftContent={
                 <Ionicons name="search" size={20} color="black"/>
               }
-               style={styles.rounded}
+              style={tw ` rounded-full`}
               autoCapitalize="none"
               autoCompleteType="off"
               autoCorrect={false}

@@ -1,7 +1,6 @@
 import  * as React from 'react';
 import {View, SafeAreaView, Text, StyleSheet} from 'react-native';
-import Feeds from '../Components/productfeed'
-
+import Feeds from '../Components/productfeed';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import Profile from '../Components/profile';
 import Chat from '../Components/chat';
@@ -36,8 +35,7 @@ export default function App({route}) {
               iconName = focused ? 'analytics-outline' : 'analytics-outline';
             }
           
-
-          
+  
           return <Ionicons name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: 'orange',

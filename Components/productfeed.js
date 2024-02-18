@@ -43,8 +43,7 @@ export default function productfeed () {
  
   {/* add the family of buttons here */}
   
-  
-  
+ 
 
   </View>
  

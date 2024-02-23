@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-rapi-ui';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+//import { TextInput } from 'react-native-rapi-ui';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import {Button} from 'react-native-paper';
 import Navoptions from './Navoptions';
 import tw from "twrnc";
+import Popularoptions from './Popularservices';
 export default function productfeed () {
 
   state = {
@@ -19,22 +20,13 @@ export default function productfeed () {
         // add aligning containers 
       <View style={styles.SecondContainer}>
         <View style={styles.staticSection}>
-        <TextInput
-              containerStyle={{ marginTop: 56 }}
-              placeholder="Search service"
-              leftContent={
-                <Ionicons name="search" size={20} color="black"/>
-              }
-              style={tw ` rounded-full`}
-              autoCapitalize="none"
-              autoCompleteType="off"
-              autoCorrect={false}
-              keyboardType="email-address"
-       
-            />
- 
- <Navoptions></Navoptions>
+        <View  >
 
+          {/* Replace desirable search input text bex here  */}
+ <Navoptions></Navoptions>
+<Popularoptions></Popularoptions>
+        </View>
+        
        </View>
       
       
@@ -44,7 +36,6 @@ export default function productfeed () {
   {/* add the family of buttons here */}
   
  
-
   </View>
  
   </View>
@@ -57,17 +48,25 @@ export default function productfeed () {
 
 
 const styles = StyleSheet.create({
-  container: {
+
+  searchwrapper:{
+
     flex: 1,
     backgroundColor: '#ffffff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
+    marginRight: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 16,
+    height: "100%",
 
+  },
+  
+  
   SecondContainer:{
     flex: 1,
     backgroundColor: '#ffffff',
     overflowX: 'hidden',
+    marginTop:100,
   },
   staticSection: {
     paddingHorizontal: 16,
@@ -92,10 +91,16 @@ buttons:{
     alignItems: 'center', // Align buttons vertically
     paddingHorizontal: 5, 
  },
- space:{
-  marginHorizontal: 15,
- },
+
  secondspace:{
 marginHorizontal:50,
+ },
+  searchContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: 10,
+    height: 50,
+
  },
 });

@@ -34,8 +34,8 @@ import {
     const [pickerValue, setPickerValue] = React.useState(null);
     const height = useHeaderHeight();
     const items = [
-        { label: '成人', value: 'STD' },
-        { label: '学生', value: 'TEE' },
+        { label: 'Provider', value: 'STD' },
+        { label: 'Client', value: 'TEE' },
       
        
     ];
@@ -126,7 +126,7 @@ import {
             <SectionContent>
                 <View>
                     <Text style={{ marginBottom: 10 }}>
-选择</Text>
+Account</Text>
                     <Picker
                         items={items}
                         value={pickerValue}
@@ -161,7 +161,7 @@ import {
               onChangeText={(text) => setPassword(text)}
             />
             <Button
-              text={loading ? "Loading" : "继续"}
+              text={loading ? "Loading" : "Log In"}
               onPress={() => {
                  //auth from server side 
                 
@@ -222,7 +222,7 @@ import {
                 }}
               >
                 <Text size="md" fontWeight="bold">
-                忘记密码
+                Forgot Password
                 </Text>
               </TouchableOpacity>
             </View>

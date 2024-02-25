@@ -29,7 +29,7 @@ export default function App({route}) {
                 ? 'home'
                 : 'home';
       
-            } else if (route.name === 'Profile') {
+            } else if (route.name === 'Services') {
               iconName = focused ? 'star' : 'star';
             }else if (route.name === 'Chat') {
               iconName = focused ? 'analytics-outline' : 'analytics-outline';
@@ -50,7 +50,7 @@ export default function App({route}) {
         
         />
         <Tab.Screen 
-        name="profile" 
+        name="Services" 
         component={Profile}
     
       

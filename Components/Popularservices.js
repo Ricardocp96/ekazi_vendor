@@ -4,10 +4,19 @@ import {useRouter} from 'expo-router';
 import styles  from './style';
 import {COLORS,SIZES} from '../constants'
 import Popularservicecard from './Popularservicecard';
+import useFetch from '../hooks/useFetch';
 const Popularservices = () => {
 const router = useRouter();
-const isLoading = false;
-const error =false;
+const { data, isLoading, error } = useFetch("search", {
+    query: "React developer",
+    num_pages: "1",
+  });
+  const [selectedJob, setSelectedJob] = useState();
+
+  const handleCardPress = (item) => {
+    router.push(`/job-details/${item.job_id}`);
+    setSelectedJob(item.job_id);
+  };
 
     return(
 <View style={styles.container}>
@@ -28,12 +37,19 @@ const error =false;
 ): error ?(
     <Text>Somethhing went wrong</Text>
 ) :(
-    <FlatList>
-        data={[1,2,3,4]}
-        renderItem={() =>(
-            <Popularservicecard/>
+    <FlatList
+        data={data}
+        renderItem={({item}) =>(
+            <Popularservicecard
+            item={item}
+            selectedJob={selectedJob}
+            handleCardPress={handleCardPress}
+            />
         )}
-    </FlatList>
+        keyExtractor={(item) => item.job_id}
+            contentContainerStyle={{ columnGap: SIZES.medium }}
+            horizontal
+    />
 )}
 
 

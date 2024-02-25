@@ -3,6 +3,7 @@ import {Text,View,TouchableOpacity, FlatList,ActivityIndicator} from 'react-nati
 import {useRouter} from 'expo-router';
 import styles  from './style';
 import {COLORS,SIZES} from '../constants'
+import Popularservicecard from './Popularservicecard';
 const Popularservices = () => {
 const router = useRouter();
 const isLoading = false;
@@ -27,7 +28,12 @@ const error =false;
 ): error ?(
     <Text>Somethhing went wrong</Text>
 ) :(
-    <FlatList></FlatList>
+    <FlatList>
+        data={[1,2,3,4]}
+        renderItem={() =>(
+            <Popularservicecard/>
+        )}
+    </FlatList>
 )}
 
 

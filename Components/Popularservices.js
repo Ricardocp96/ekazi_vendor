@@ -5,7 +5,9 @@ import styles  from './style';
 import {COLORS,SIZES} from '../constants'
 import Popularservicecard from './Popularservicecard';
 import useFetch from '../hooks/useFetch';
+
 const Popularservices = () => {
+
 const router = useRouter();
 const { data, isLoading, error } = useFetch("search", {
     query: "React developer",

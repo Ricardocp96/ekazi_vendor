@@ -20,8 +20,6 @@ const useFetch = (endpoint, query) => {
     }
   };
   
-  
-
   const fetchData = async () => {
     setIsLoading(true);
 

@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Text,View,TouchableOpacity, FlatList,ActivityIndicator} from 'react-native';
 import {useRouter} from 'expo-router';
 import styles  from './style';
-import {COLORS,SIZES} from '../constants'
+import {COLORS,SIZES, FONT, SHADOWS,} from '../constants'
 import Popularservicecard from './Popularservicecard';
 import useFetch from '../hooks/useFetch';
 

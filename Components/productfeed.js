@@ -1,11 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-//import { TextInput } from 'react-native-rapi-ui';
-import { Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
-import {Button} from 'react-native-paper';
 import Navoptions from './Navoptions';
-import tw from "twrnc";
 import Popularoptions from './Popularservices';
 export default function productfeed () {
 
@@ -16,24 +12,24 @@ export default function productfeed () {
   
     return (
 
-        //TODO
-        // add aligning containers 
+       
       <View style={styles.SecondContainer}>
         <View style={styles.staticSection}>
-        <View  >
+        <View  > 
+       
 
-          {/* Replace desirable search input text bex here  */}
- <Navoptions></Navoptions>
-<Popularoptions></Popularoptions>
+  
+          {/* add search txt component here*/}
+ <Popularoptions></Popularoptions>
         </View>
-        
+       
        </View>
-      
+       
       
  <View style={styles.buttons}>
  <View style={styles.sidebyside}>
  
-  {/* add the family of buttons here */}
+ 
   
  
   </View>

@@ -23,7 +23,7 @@ source={{
         resizeMode="contain"
         style={styles.logoImage}
         />
-
+</TouchableOpacity>
         <Text style={styles.providerName} numberOfLines={1}>
         {item.employer_name}
         </Text>
@@ -39,7 +39,7 @@ source={{
         </View>
       </View>
     </TouchableOpacity>
-</TouchableOpacity>
+
 );
 }
 

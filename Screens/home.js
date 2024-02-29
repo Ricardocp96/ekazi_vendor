@@ -1,12 +1,12 @@
 import  * as React from 'react';
 import {View, SafeAreaView, Text, StyleSheet} from 'react-native';
 import Feeds from '../Components/productfeed';
-import { MaterialIcons } from '@expo/vector-icons'; 
+
 import Profile from '../Components/profile';
 import Chat from '../Components/chat';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from '@expo/vector-icons/Ionicons';
 
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const Tab = createBottomTabNavigator();
@@ -24,26 +24,26 @@ export default function App({route}) {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Feeds') {
+            if (route.name === 'Home') {
               iconName = focused
                 ? 'home'
                 : 'home';
       
             } else if (route.name === 'Services') {
-              iconName = focused ? 'star' : 'star';
+              iconName = focused ? 'dots-grid' : 'dots-grid';
             }else if (route.name === 'Chat') {
-              iconName = focused ? 'analytics-outline' : 'analytics-outline';
+              iconName = focused ? 'chat-outline' : 'chat-outline';
             }
           
   
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'orange',
+          tabBarActiveTintColor: 'blue',
           tabBarInactiveTintColor: 'gray',
         })}
       >
 
-        <Tab.Screen name="Feeds"
+        <Tab.Screen name="Home"
         options={{headerShown:false}}
         component={Feeds}
         
@@ -56,8 +56,9 @@ export default function App({route}) {
       
         />
      
-       <Tab.Screen name="chat"   
-     
+       <Tab.Screen 
+       name="Chat"   
+
        component={Chat}
        />
       

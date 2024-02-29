@@ -20,11 +20,7 @@ const Layout = () => {
     return null;
   }
 
-  return (
-    <Stack initialRouteName="home">
-      <Stack.Screen name="home" />
-    </Stack>
-  )
+ 
 };
 
 export default Layout;

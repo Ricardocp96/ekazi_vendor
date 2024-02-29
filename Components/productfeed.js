@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import Navoptions from './Navoptions';
 import Popularoptions from './Popularservices';
 import Search from './search';
+import Nearbyservice from "./Nearservices";
 export default function productfeed () {
 
   state = {
@@ -23,6 +24,7 @@ export default function productfeed () {
           {/* add search txt component here*/}
           <Search></Search>
  <Popularoptions></Popularoptions>
+ <Nearbyservice></Nearbyservice>
         </View>
        
        </View>
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     overflowX: 'hidden',
-    marginTop:5,
+    marginTop:50,
   },
   staticSection: {
     paddingHorizontal: 16,

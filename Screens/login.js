@@ -50,11 +50,13 @@ import {
        });
        
     // Check if the response indicates successful authentication
-    if (sender.data.success) {
+    //TODO -- add a diistinguuishable factor to distinguish network error vs credential error
+    if (sender.data) {
+      console.log(sender.data)
       navigation.replace("Home", {
           screen: "Home",
           params: { username }
-      });
+      })
   } else {
       // Handle unsuccessful authentication
       console.log(sender.data)

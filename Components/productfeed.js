@@ -5,8 +5,8 @@ import Navoptions from './Navoptions';
 import Popularoptions from './Popularservices';
 import Search from './search';
 import Nearbyservice from "./Nearservices";
-export default function productfeed () {
-
+export default function productfeed (route) {
+console.log(route.params)
   state = {
     isLoading: true
   };

@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 
 export default function App({route}) {
-
+const  uname = route.params; 
   return (
 
       <View style={styles.container}>
@@ -46,7 +46,7 @@ export default function App({route}) {
         <Tab.Screen name="Home"
         options={{headerShown:false}}
         component={Feeds}
-        
+        uname={uname}
         
         />
         <Tab.Screen 

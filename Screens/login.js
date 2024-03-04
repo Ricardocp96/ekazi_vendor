@@ -28,7 +28,7 @@ import {
   
   export default function ({ navigation }) {
     const { isDarkmode, setTheme } = useTheme();
-    const [mobile, setPhone] = useState("");
+    const [username, setusername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [pickerValue, setPickerValue] = React.useState(null);
@@ -41,37 +41,33 @@ import {
     ];
    
     async function  auth_api  (){ 
+      try{
       setLoading(true);
-     const sender = await axios.post('http://54.197.36.210:3000/api/user/login', {
-        mobile: mobile,
+     const sender = await axios.post('http://13.51.201.202:3000/auth/login', {
+        username: username,
         password:password
 
-       })
-       .then(() => navigation.replace("Home",{
-       
-        screen:"Home",
-        params: {mobile}
-      
-   
-       }))
-
-
-       .then(() => {
-         //Success
-         
-         if(!sender) 
-         setLoading(false);
-        
-       })
-       //If response is not in json then in error
-       .catch((error) => {
-         //Error
-         //const message= "something went wrong try again"
-         setLoading(false);
-         alert(JSON.stringify("something went wrong try again"));
-    
        });
-   };
+       
+    // Check if the response indicates successful authentication
+    if (sender.data.success) {
+      navigation.replace("Home", {
+          screen: "Home",
+          params: { username }
+      });
+  } else {
+      // Handle unsuccessful authentication
+      console.log(sender.data)
+      setLoading(false);
+      alert("Incorrect credentials");
+  }
+} catch (error) {
+  // Handle network errors or server errors
+  setLoading(false);
+  alert("Network error or server error occurred");
+  console.log(error);
+}
+};
       
       
     
@@ -137,16 +133,16 @@ Account</Text>
             </SectionContent>
         </Section>
           
-            <Text>Phone</Text>
+            <Text>User username</Text>
             <TextInput
               containerStyle={{ marginTop: 15 }}
-              placeholder="Phone number"
-              value={mobile}
+              placeholder="User username"
+              value={username}
               autoCapitalize="none"
               autoCompleteType="off"
               autoCorrect={false}
               keyboardType="email-address"
-              onChangeText={(text) => setPhone(text)}
+              onChangeText={(text) => setusername(text)}
             />
 
             <Text style={{ marginTop: 15 }}>Password</Text>
@@ -165,9 +161,9 @@ Account</Text>
               onPress={() => {
                  //auth from server side 
                 
-                //auth_api();
+                auth_api();
                 // login directly to the home page 
-                navigation.replace("Home")
+                //navigation.replace("Home")
 
             
 

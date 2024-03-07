@@ -25,11 +25,11 @@ source={{
         />
 </TouchableOpacity>
         <Text style={styles.providerName} numberOfLines={1}>
-        {item.employer_name}
+        {item.title}
         </Text>
         <View style={styles.infoContainer}>
         <Text style={styles.jobName(selectedService, item)} numberOfLines={1}>
-          {item.job_title}
+          {item.description}
         </Text>
         <View style={styles.infoWrapper}>
           <Text style={styles.publisher(selectedService, item)}>

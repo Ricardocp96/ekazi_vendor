@@ -9,15 +9,15 @@ import useFetch from '../hooks/useFetch';
 const Popularservices = () => {
 
 const router = useRouter();
-const { data, isLoading, error } = useFetch("search", {
-    query: "React developer",
-    num_pages: "1",
+const { data, isLoading, error } = useFetch( {
+    //query: "description",
+    //num_pages: "1",
   });
   const [selectedJob, setSelectedJob] = useState();
 
   const handleCardPress = (item) => {
-    router.push(`/job-details/${item.job_id}`);
-    setSelectedJob(item.job_id);
+    router.push(`/job-details/${item._id}`);
+    setSelectedJob(item._id);
   };
 
     return(
@@ -48,7 +48,7 @@ const { data, isLoading, error } = useFetch("search", {
             handleCardPress={handleCardPress}
             />
         )}
-        keyExtractor={(item) => item.job_id}
+        keyExtractor={(item) => item._id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
     />

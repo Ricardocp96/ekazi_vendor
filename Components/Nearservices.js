@@ -9,9 +9,8 @@ import useFetch from "../hooks/useFetch";
 
 const Nearbyservice = () => {
   const router = useRouter();
-  const { data, isLoading, error } = useFetch("search", {
-    query: "React Native developer",
-    num_pages: "1",
+  const { data, isLoading, error } = useFetch( {
+ 
   });
 
   return (
@@ -31,8 +30,10 @@ const Nearbyservice = () => {
         ) : (
           data?.map((job) => (
             <NearbyCard
-              job={job}
-              key={`nearby-job-${job.job_id}`}
+
+            job={job.title} 
+              //job={job}
+              key={(item) => item._id}
               handleNavigate={() => router.push(`/job-details/${job.job_id}`)}
             />
           ))

@@ -29,13 +29,13 @@ source={{
         </Text>
         <View style={styles.infoContainer}>
         <Text style={styles.jobName(selectedService, item)} numberOfLines={1}>
-          {item.description}
+          {item.servicetitle}
         </Text>
         <View style={styles.infoWrapper}>
           <Text style={styles.publisher(selectedService, item)}>
-            {item?.job_publisher} -
+            {item?.job} -
           </Text>
-          <Text style={styles.location}> {item.job_country}</Text>
+          <Text style={styles.location}> {item.description}</Text>
         </View>
       </View>
     </TouchableOpacity>

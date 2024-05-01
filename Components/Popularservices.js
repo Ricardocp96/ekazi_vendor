@@ -5,19 +5,24 @@ import styles  from './style';
 import {COLORS,SIZES, FONT, SHADOWS,} from '../constants'
 import Popularservicecard from './Popularservicecard';
 import useFetch from '../hooks/useFetch';
+import { useNavigation } from '@react-navigation/native';
 
 const Popularservices = () => {
 
+    const navigation= useNavigation();    
 const router = useRouter();
 const { data, isLoading, error } = useFetch( {
-    //query: "description",
-    //num_pages: "1",
+    
   });
   const [selectedJob, setSelectedJob] = useState();
 
   const handleCardPress = (item) => {
-    router.push(`/job-details/${item._id}`);
-    setSelectedJob(item._id);
+
+    //console.log(router)
+   
+    navigation.navigate('Details',{detail:item})
+    //router.push(`Service_details/${item.id}`);
+    //setSelectedJob(item.id);
   };
 
     return(
@@ -48,11 +53,12 @@ const { data, isLoading, error } = useFetch( {
             handleCardPress={handleCardPress}
             />
         )}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
     />
 )}
+
 
 
 </View>

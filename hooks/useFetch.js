@@ -8,16 +8,13 @@ const useFetch = (endpoint, query) => {
 
   const options = {
     method: 'GET',
-    url: 'http://13.51.201.202:3000/jobs',
+    url: 'http://13.51.201.202:3000/service-providers',
     params: {
       query: 'description',
       page: '1',
       num_pages: '1'
     },
-    headers: {
-      'X-RapidAPI-Key': 'b10b0e5043msha5b765dbb03010ep119851jsn0d0232ae8f0f',
-      'X-RapidAPI-Host': 'jsearch.p.rapidapi.com'
-    }
+    
   };
   
   const fetchData = async () => {
@@ -27,7 +24,7 @@ const useFetch = (endpoint, query) => {
       const response = await axios.request(options);
 
       setData(response.data);
-      console.log(response.data)
+      
       setIsLoading(false);
     } catch (error) {
       setError(error);

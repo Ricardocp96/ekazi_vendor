@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from "react-native-rapi-ui";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ServiceDetails from './Service_details/details'
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +47,7 @@ options={{headerShown:false}}
 options={{headerShown:false}}
 />
 <Stack.Screen     name = "Register" component={Register}/>
-
+<Stack.Screen      name ="Details" component={ServiceDetails}/>
 </Stack.Navigator>
 
 </ThemeProvider>

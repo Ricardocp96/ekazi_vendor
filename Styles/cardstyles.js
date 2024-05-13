@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: (selectedService, item) => ({
     width: 250,
     padding: SIZES.xLarge,
-    backgroundColor: selectedService === item.job_id ? COLORS.primary : "#FFF",
+    backgroundColor: selectedService === item.id ? COLORS.primary : "#FFF",
     borderRadius: SIZES.medium,
     justifyContent: "space-between",
     ...SHADOWS.medium,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   jobName: (selectedService, item) => ({
     fontSize: SIZES.large,
     fontFamily: FONT.medium,
-    color: selectedService === item.job_id ? COLORS.white : COLORS.primary,
+    color: selectedService === item.id ? COLORS.white : COLORS.primary,
   }),
   infoWrapper: {
     flexDirection: "row",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   publisher: (selectedService, item) => ({
     fontSize: SIZES.medium - 2,
     fontFamily: FONT.regular,
-    color: selectedService === item.job_id ? COLORS.white : COLORS.primary,
+    color: selectedService === item.id ? COLORS.white : COLORS.primary,
   }),
   location: {
     fontSize: SIZES.medium - 2,

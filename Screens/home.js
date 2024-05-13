@@ -2,8 +2,9 @@ import  * as React from 'react';
 import {View, SafeAreaView, Text, StyleSheet} from 'react-native';
 import Feeds from '../Components/productfeed';
 
-import Profile from '../Components/profile';
-import Chat from '../Components/chat';
+import Profile from '../Components/profile_user';
+import  Messaging from './MessageScreen'
+import Service from '../Components/Services'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -31,14 +32,18 @@ const  uname = route.params;
       
             } else if (route.name === 'Services') {
               iconName = focused ? 'dots-grid' : 'dots-grid';
-            }else if (route.name === 'Chat') {
-              iconName = focused ? 'chat-outline' : 'chat-outline';
-            }
+            }else if (route.name==='Chats'){
+                iconName=focused ? 'chat':'chat';
+              
+            }else if (route.name === 'Profile') {
+              iconName = focused ? 'account' : 'account';
+            } 
+            
           
   
           return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'blue',
+          tabBarActiveTintColor: '#FF7754',
           tabBarInactiveTintColor: 'gray',
         })}
       >
@@ -51,17 +56,23 @@ const  uname = route.params;
         />
         <Tab.Screen 
         name="Services" 
-        component={Profile}
+        component={Service}
     
       
         />
-     
-       <Tab.Screen 
-       name="Chat"   
+      <Tab.Screen
+      name="Chats"
 
-       component={Chat}
+      component={Messaging}
+      >
+
+      </Tab.Screen>
+       <Tab.Screen 
+       name="Profile"   
+
+       component={Profile}
        />
-      
+     
        
       </Tab.Navigator>
    

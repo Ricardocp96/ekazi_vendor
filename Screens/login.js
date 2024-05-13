@@ -99,7 +99,7 @@ import {
                 height: 220,
                 width: 220,
               }}
-              source={require("../assets/join.png")}
+              source={require("../assets/ekazi.png")}
             />
           </View>
           <View
@@ -124,13 +124,8 @@ import {
             <SectionContent>
                 <View>
                     <Text style={{ marginBottom: 10 }}>
-Account</Text>
-                    <Picker
-                        items={items}
-                        value={pickerValue}
-                        placeholder="Choose account"
-                        onValueChange={(val) => setPickerValue(val)}
-                    />
+</Text>
+                    
                 </View>
             </SectionContent>
         </Section>

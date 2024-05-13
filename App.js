@@ -11,8 +11,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ThemeProvider } from "react-native-rapi-ui";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ServiceDetails from './Service_details/details'
-
+import { useFonts } from 'expo-font';
+import { AppLoading } from 'expo';
+import ChannelListScreen from './Chat/channelList';
+import SplashScreen from './Components/Splash';
+import Intro from './Components/intro'
 const Stack = createNativeStackNavigator();
+
+
 
 
 const globalScreen={
@@ -26,6 +32,13 @@ const authenticatir =()=> {
 
 }
 export default function App() {
+
+  const [fontsLoaded] = useFonts({
+    DMRegular: require('./assets/fonts/DMSans-Regular.ttf'),
+    DMMedium: require('./assets/fonts/DMSans-Medium.ttf'),
+    DMBold: require('./assets/fonts/DMSans-Bold.ttf'),
+    // Add more font families if needed
+  });
  return(
   //TODO
 //rap this in an auth container 
@@ -39,15 +52,19 @@ export default function App() {
  
 
 screenOptions={globalScreen}>
-
+<Stack.Screen name ="Splash" component={SplashScreen} options={{headerShown:false}}/>
+<Stack.Screen name="Intro" component={Intro} options={{headerShown:false}}/>
 <Stack.Screen     name = "Login" component={Login}
 options={{headerShown:false}}
 />
 <Stack.Screen     name = "Home" component={homescreen}
 options={{headerShown:false}}
 />
-<Stack.Screen     name = "Register" component={Register}/>
+<Stack.Screen      name = "Register" component={Register}/>
 <Stack.Screen      name ="Details" component={ServiceDetails}/>
+<Stack.Screen name="ChatScreen" component={ChannelListScreen}/>
+
+
 </Stack.Navigator>
 
 </ThemeProvider>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import Constants from 'expo-constants';
 import Navoptions from './Navoptions';
 import Popularoptions from './Popularservices';
@@ -14,7 +14,7 @@ console.log(route.params)
   
     return (
 
-       
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.SecondContainer}>
         <View style={styles.staticSection}>
         <View  > 
@@ -23,18 +23,20 @@ console.log(route.params)
   
           {/* add search txt component here*/}
           <Search></Search>
+          
  <Popularoptions></Popularoptions>
  <Nearbyservice></Nearbyservice>
+
         </View>
        
        </View>
        
       
- 
+      
  
       </View>
-      
-      
+    
+      </ScrollView>
     );
   }
 
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ffffff',
     overflowX: 'hidden',
-    marginTop:50,
+   // marginTop:4,
   },
   staticSection: {
     paddingHorizontal: 16,

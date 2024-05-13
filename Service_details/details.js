@@ -5,18 +5,23 @@ import { View, Text, ScrollView, ActivityIndicator, RefreshControl, StyleSheet, 
 import { useRoute } from '@react-navigation/native';
 import { ScreenHeaderBtn, JobTabs, Company,Footer } from '../Services_components';
 import { COLORS, icons, SIZES } from '../constants';
+import { useNavigation } from '@react-navigation/native';
 import useFetch from '../hooks/useFetch';
 
 const tabs = ["About"];
 
 const ServiceDetails = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const { detail } = route.params;
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [refreshing, setRefreshing] = useState(false);
-  const { data, isLoading, error, refetch } = useFetch(`service-details/${detail.id}`);
-
+  const { data, isLoading, error, refetch } = useFetch();
+  const handleRequestService = () => {
+    // Pass the necessary parameters to the chat screen
+    navigation.navigate('Chat');
+  };
   const onRefresh = () => {
     setRefreshing(true);
     refetch();
@@ -65,7 +70,7 @@ const ServiceDetails = () => {
           </>
         )}
       </ScrollView>
-      <Footer url={data[0]?.job_google_link ?? 'https://careers.google.com/jobs/results/'} />
+      <Footer  />
     </View>
   );
 };

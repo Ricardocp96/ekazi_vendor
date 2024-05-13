@@ -35,7 +35,7 @@ source={{
           <Text style={styles.publisher(selectedService, item)}>
             {item?.job} -
           </Text>
-          <Text style={styles.location}> {item.description}</Text>
+          <Text style={styles.location}> {item.name}</Text>
         </View>
       </View>
     </TouchableOpacity>

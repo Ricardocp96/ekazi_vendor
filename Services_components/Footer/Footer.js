@@ -2,8 +2,15 @@ import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 
 import styles from "./footer.style";
 import { icons } from "../../constants";
+import { useNavigation } from '@react-navigation/native';
+
 
 const Footer = ({ url }) => {
+  const navigation = useNavigation();
+  const handleChatNavigation = ()=>{
+
+    navigation.navigate('ChatScreen');
+  }
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.likeBtn}>
@@ -17,7 +24,7 @@ const Footer = ({ url }) => {
       <TouchableOpacity
         style={styles.applyBtn}
         // navigate to the chat page  
-        onPress={() => Linking.openURL(url)}
+        onPress={handleChatNavigation}
       >
         <Text style={styles.applyBtnText}>Request Service </Text>
       </TouchableOpacity>

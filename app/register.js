@@ -119,7 +119,7 @@ export default function Register() {
             />
           </View>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Join eKazi</Text>
+            <Text style={styles.title}>Join eKazi Vendor</Text>
             <Text style={styles.subtitle}>Create your vendor account</Text>
           </View>
         </View>

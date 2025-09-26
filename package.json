@@ -38,6 +38,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-updates": "~0.28.17",
     "firebase": "^10.11.1",
+    "location": "^0.0.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.5",

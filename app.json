@@ -29,7 +29,6 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.ricardo96.ekazi.vendor",
-      "versionCode": 4,
       "usesCleartextTraffic": true,
       "permissions": [
         "ACCESS_COARSE_LOCATION",

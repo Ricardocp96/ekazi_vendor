@@ -2,14 +2,11 @@ import { View, Text, TouchableOpacity, Image, Linking } from "react-native";
 
 import styles from "./footer.style";
 import { icons } from "../../constants";
-import { useNavigation } from '@react-navigation/native';
 
 
 const Footer = ({ url }) => {
-  const navigation = useNavigation();
   const handleChatNavigation = ()=>{
-
-    navigation.navigate('ChatScreen');
+    // TODO: Navigate to chat
   }
   return (
     <View style={styles.container}>

@@ -5,12 +5,9 @@ import styles  from './style';
 import {COLORS,SIZES, FONT, SHADOWS,} from '../constants'
 import Popularservicecard from './Popularservicecard';
 import useFetch from '../hooks/useFetch';
-import { useNavigation } from '@react-navigation/native';
 
 const Popularservices = () => {
-
-    const navigation= useNavigation();    
-const router = useRouter();
+    const router = useRouter();
 const { data, isLoading, error } = useFetch( {
     
   });
@@ -20,7 +17,7 @@ const { data, isLoading, error } = useFetch( {
 
     //console.log(router)
    
-    navigation.navigate('Details',{detail:item})
+    // TODO: Navigate to details
     //router.push(`Service_details/${item.id}`);
     //setSelectedJob(item.id);
   };

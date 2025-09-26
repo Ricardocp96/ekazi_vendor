@@ -5,12 +5,10 @@ import styles from "../Styles/nearbystyle";
 import { COLORS } from "../constants";
 import NearbyJobCard from "./NearbyCard";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from '@react-navigation/native';
 import useFetch from "../hooks/useFetch";
 
 const Nearbyservice = () => {
-  const router = useRouter();
-  const navigation= useNavigation();  
+  const router = useRouter();  
   const { data, isLoading, error, refetch } = useFetch({
     // Your fetch configuration object
   });
@@ -20,7 +18,7 @@ const Nearbyservice = () => {
   const handleNavigate = (item) => {
     // Navigate to the detail screen using the item ID
    
-    navigation.navigate('Details',{detail:item})
+    // TODO: Navigate to details
   };
 
   return (

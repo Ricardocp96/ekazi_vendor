@@ -1,26 +1,25 @@
 // ServiceDetailScreen.js
 
 import React, { useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, RefreshControl, StyleSheet, TouchableOpacity } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import { ScreenHeaderBtn, JobTabs, Company,Footer } from '../Services_components';
+import { View, Text, ScrollView, ActivityIndicator, RefreshControl, StyleSheet } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+import { JobTabs, Company,Footer } from '../Services_components';
 import { COLORS, icons, SIZES } from '../constants';
-import { useNavigation } from '@react-navigation/native';
 import useFetch from '../hooks/useFetch';
+import CustomHeader from '../Components/CustomHeader';
 
 const tabs = ["About"];
 
 const ServiceDetails = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { detail } = route.params;
+  const params = useLocalSearchParams();
+  const detail = params.detail ? JSON.parse(params.detail) : null;
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
   const [refreshing, setRefreshing] = useState(false);
   const { data, isLoading, error, refetch } = useFetch();
   const handleRequestService = () => {
     // Pass the necessary parameters to the chat screen
-    navigation.navigate('Chat');
+    // TODO: Navigate to chat
   };
   const onRefresh = () => {
     setRefreshing(true);
@@ -42,6 +41,7 @@ const ServiceDetails = () => {
 
   return (
     <View style={styles.container}>
+      <CustomHeader title={detail?.servicetitle || 'Service Details'} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -52,11 +52,6 @@ const ServiceDetails = () => {
           <Text>Something went wrong</Text>
         ) : (
           <>
-            <View style={styles.header}>
-              <ScreenHeaderBtn iconUrl={icons.left} dimension='60%' />
-              <Text style={styles.headerTitle}>{detail.servicetitle}</Text>
-              <ScreenHeaderBtn iconUrl={icons.share} dimension='60%' />
-            </View>
             <Company
               companyLogo={detail.image}
               companyName={detail.servicetitle}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_CONFIG } from "../constants/api";
 
 const useFetch = (endpoint, query) => {
   const [data, setData] = useState([]);
@@ -8,13 +9,12 @@ const useFetch = (endpoint, query) => {
 
   const options = {
     method: 'GET',
-    url: 'http://13.51.201.202:3000/service-providers',
-    params: {
+    url: `${API_CONFIG.BASE_URL}${endpoint || '/service-providers'}`,
+    params: query || {
       query: 'description',
       page: '1',
       num_pages: '1'
     },
-    
   };
   
   const fetchData = async () => {

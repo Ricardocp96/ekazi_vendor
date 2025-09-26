@@ -1,10 +1,12 @@
 {
   "expo": {
-    "name": "ekazi",
-    "slug": "ekazi",
-    "version": "1.0.0",
+    "name": "eKazi Vendor",
+    "slug": "eVendor",
+    "version": "1.0.0.4",
+    "runtimeVersion": "1.0.0.4",
     "orientation": "portrait",
     "icon": "./assets/Image_eKazi.png",
+    "scheme": "ekazi-vendor",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,9 +18,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ricardo96.ekazi",
-      "runtimeVersion": {
-        "policy": "appVersion"
+      "bundleIdentifier": "com.ricardo96.ekazi.vendor",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Your location is used to prefill your address during registration."
       }
     },
     "android": {
@@ -26,21 +28,28 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ricardo96.ekazi",
-      "runtimeVersion": "1.0.0"
+      "package": "com.ricardo96.ekazi.vendor",
+      "versionCode": 4,
+      "usesCleartextTraffic": true,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font",
+      "expo-location"
     ],
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "e139a047-c2ae-4929-8e4c-0ae7175d1f65"
+        "projectId": "3d6062a8-8e0e-4f92-baf8-3e8658895ced"
       }
     },
     "updates": {

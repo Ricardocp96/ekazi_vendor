@@ -2,7 +2,7 @@
 import {Text,View,TouchableOpacity,Image, } from 'react-native';
 import { FlatList } from 'react-native';
 import tw from "twrnc";
-import { Icon } from '@rneui/themed';
+// import { Icon } from '@rneui/themed'; // Commented out: unmaintained package
 
 
 const data =[

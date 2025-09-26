@@ -8,7 +8,6 @@ import {
   FlatList,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useNavigation } from '@react-navigation/native';
 
 import styles from "../Styles/searchstyle";
 import { icons, SIZES } from "../constants";
@@ -57,7 +56,7 @@ const Search = ({ searchTerm, setSearchTerm, handleClick }) => {
               onPress={() => {
                 setActiveJobType(item);
                 //Todo change 
-                navigation.navigate('Details',{detail:item})
+                // TODO: Navigate to details
               }}
             >
               <Text style={styles.tabText(activeJobType, item)}>{item}</Text>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import { View, Text, Image, StyleSheet, useWindowDimensions, FlatList } from 'react-native';
 import { Button } from 'react-native-paper';
 
-const InstructionScreen = ({ navigation }) => {
+const InstructionScreen = () => {
+  const { width } = useWindowDimensions();
   const slides = [
     {
       title: 'Welcome to ekazi!',
@@ -29,16 +29,30 @@ const InstructionScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Carousel
-        data={slides}
-        renderItem={renderItem}
-        sliderWidth={300}
-        itemWidth={300}
-      />
+      {/* Minimal maintained pager replacement using FlatList */}
+      <View style={{ width }}>
+        <FlatList
+          data={slides}
+          keyExtractor={(_, idx) => String(idx)}
+          renderItem={({ item }) => (
+            <View style={[styles.slide, { width }]}>
+              <Image source={item.image} style={styles.image} />
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
+          )}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          getItemLayout={(_, index) => ({ length: width, offset: width * index, index: index })}
+          snapToInterval={width}
+          decelerationRate="fast"
+        />
+      </View>
       <Button
         mode="contained"
         style={styles.button}
-        onPress={() => navigation.replace('Login')}
+        onPress={() => {/* TODO: Navigate to login */}}
       >
         Next
       </Button>

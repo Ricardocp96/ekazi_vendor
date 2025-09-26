@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-const SplashScreen = ({ navigation }) => {
+const SplashScreen = () => {
   // Animation for logo and text
   const logoOpacity = new Animated.Value(0);
   const textOpacity = new Animated.Value(0);
@@ -37,7 +37,7 @@ const clearAllData = async () => {
            //socket.emit('receiveFriendRequest',id)
           //console.log("emmited"+ username);
           // Navigate to the next screen after establishing socket connection
-          navigation.replace('Home');
+          // TODO: Navigate to home
         } else {
           // If token doesn't exist, continue with the splash animation
           Animated.timing(logoOpacity, {
@@ -54,7 +54,7 @@ const clearAllData = async () => {
 
           // Navigate to the next screen after splash animation
           setTimeout(() => {
-            navigation.replace('Intro'); // Replace 'Intro' with the name of your main screen
+            // TODO: Navigate to intro
           }, 2500);
         }
       } catch (error) {

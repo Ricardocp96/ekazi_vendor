@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Text } from 'react-native';
 import { COLORS, FONT } from '../../constants/theme';
 
 export default function TabLayout() {
@@ -37,11 +37,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons 
-              name={focused ? 'home' : 'home-outline'} 
-              size={size} 
-              color={color} 
-            />
+            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>🏠</Text>
           ),
         }}
       />
@@ -50,11 +46,7 @@ export default function TabLayout() {
         options={{
           title: 'Services',
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons 
-              name={focused ? 'grid' : 'grid-outline'} 
-              size={size} 
-              color={color} 
-            />
+            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>⚙️</Text>
           ),
         }}
       />
@@ -63,11 +55,7 @@ export default function TabLayout() {
         options={{
           title: 'Chats',
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons 
-              name={focused ? 'chatbubbles' : 'chatbubbles-outline'} 
-              size={size} 
-              color={color} 
-            />
+            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>💬</Text>
           ),
         }}
       />
@@ -76,11 +64,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons 
-              name={focused ? 'person' : 'person-outline'} 
-              size={size} 
-              color={color} 
-            />
+            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>👤</Text>
           ),
         }}
       />

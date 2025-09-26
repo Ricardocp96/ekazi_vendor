@@ -1,4 +1,4 @@
-package com.ricardo96.ekazi
+package com.ricardo96.ekazi.vendor
 
 import android.os.Build
 import android.os.Bundle

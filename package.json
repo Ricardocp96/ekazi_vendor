@@ -9,7 +9,6 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@draftbit/ui": "^49.4.10",
     "@expo/metro-runtime": "~5.0.5",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-camera-roll/camera-roll": "^7.4.1",
@@ -39,13 +38,11 @@
     "react-native": "0.79.5",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "~2.24.0",
-    "react-native-paper": "^5.12.3",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "15.11.2",
     "react-native-web": "^0.20.0",
-    "stream-chat-expo": "^5.29.0",
     "twrnc": "^4.0.0",
     "typescript": "~5.8.3"
   },

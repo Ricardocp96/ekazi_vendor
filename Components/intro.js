@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, useWindowDimensions, FlatList } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View, Text, Image, StyleSheet, useWindowDimensions, FlatList, TouchableOpacity } from 'react-native';
 
 const InstructionScreen = () => {
   const { width } = useWindowDimensions();
@@ -49,13 +48,12 @@ const InstructionScreen = () => {
           decelerationRate="fast"
         />
       </View>
-      <Button
-        mode="contained"
+      <TouchableOpacity
         style={styles.button}
         onPress={() => {/* TODO: Navigate to login */}}
       >
-        Next
-      </Button>
+        <Text style={styles.buttonText}>Next</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -95,6 +93,13 @@ const styles = StyleSheet.create({
     width: 200,
     paddingVertical: 10,
     borderRadius: 20,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

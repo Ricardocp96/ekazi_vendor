@@ -26,14 +26,8 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('vendor');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const accountTypes = [
-    { label: 'Vendor', value: 'vendor' },
-    { label: 'Client', value: 'client' },
-  ];
 
   useEffect(() => {
     (async () => {
@@ -65,26 +59,38 @@ export default function Register() {
   }, []);
 
   async function register() {
+    console.log('Register function called with state:', {
+      email: email || '(empty)',
+      phone: phone || '(empty)',
+      location: location || '(empty)',
+      username: username || '(empty)',
+      password: password ? '[REDACTED]' : '(empty)',
+    });
+
     if (password !== confirmPassword) {
       Alert.alert("Error", "Passwords do not match");
       return;
     }
 
     if (!username || !password || !email || !phone || !location) {
+      console.log('Validation failed - missing fields');
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
     try {
       setLoading(true);
-      const response = await apiClient.post(API_CONFIG.ENDPOINTS.PROVIDER_REGISTER, {
-        email: email,
-        phone: phone,
-        location: location,
-        username: username,
+      const registrationData = {
+        email: email.trim(),
+        phone: phone.trim(),
+        location: location.trim(),
+        username: username.trim(),
         password: password,
-      });
+      };
+      console.log('Registration data being sent:', { ...registrationData, password: '[REDACTED]' });
+      const response = await apiClient.post(API_CONFIG.ENDPOINTS.PROVIDER_REGISTER, registrationData);
 
+      setLoading(false);
       if (response.data) {
         Alert.alert("Success", "Account created successfully!", [
           {
@@ -96,7 +102,29 @@ export default function Register() {
     } catch (error) {
       setLoading(false);
       console.error('Registration error:', error);
-      Alert.alert("Error", "Something went wrong. Please try again.");
+      console.error('Error response data:', error?.response?.data);
+      console.error('Error response status:', error?.response?.status);
+      
+      // Extract error message from various possible locations
+      let message = 'Something went wrong. Please try again.';
+      if (error?.response?.data?.message) {
+        message = error.response.data.message;
+      } else if (Array.isArray(error?.response?.data?.message)) {
+        // Handle validation errors that come as arrays
+        message = error.response.data.message.join(', ');
+      } else if (error?.response?.data?.error) {
+        message = error.response.data.error;
+      } else if (error?.message) {
+        message = error.message;
+      }
+      
+      // Use setTimeout to ensure alert is shown after error handling
+      setTimeout(() => {
+        Alert.alert(
+          "Registration Failed",
+          message
+        );
+      }, 100);
     }
   }
 
@@ -127,30 +155,6 @@ export default function Register() {
         {/* Form Section */}
         <View style={styles.formSection}>
           <View style={styles.formContainer}>
-            {/* Account Type Selection */}
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputLabel}>Account Type</Text>
-              <View style={styles.accountTypeContainer}>
-                {accountTypes.map((type) => (
-                  <TouchableOpacity
-                    key={type.value}
-                    style={[
-                      styles.accountTypeButton,
-                      selectedValue === type.value && styles.accountTypeButtonSelected
-                    ]}
-                    onPress={() => setSelectedValue(type.value)}
-                  >
-                    <Text style={[
-                      styles.accountTypeText,
-                      selectedValue === type.value && styles.accountTypeTextSelected
-                    ]}>
-                      {type.label}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
-
             {/* Mobile Number Input */}
             <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Email</Text>
@@ -358,32 +362,6 @@ const styles = StyleSheet.create({
     fontFamily: FONT.medium,
     color: COLORS.textPrimary,
     marginBottom: SPACING.small,
-  },
-  accountTypeContainer: {
-    flexDirection: 'row',
-    gap: SPACING.small,
-  },
-  accountTypeButton: {
-    flex: 1,
-    paddingVertical: SPACING.medium,
-    paddingHorizontal: SPACING.medium,
-    borderRadius: SIZES.medium,
-    backgroundColor: COLORS.gray100,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    alignItems: 'center',
-  },
-  accountTypeButtonSelected: {
-    backgroundColor: COLORS.primary,
-    borderColor: COLORS.primary,
-  },
-  accountTypeText: {
-    fontSize: SIZES.medium,
-    fontFamily: FONT.medium,
-    color: COLORS.textSecondary,
-  },
-  accountTypeTextSelected: {
-    color: COLORS.white,
   },
   inputWrapper: {
     flexDirection: 'row',

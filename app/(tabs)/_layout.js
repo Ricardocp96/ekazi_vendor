@@ -1,8 +1,11 @@
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, FONT } from '../../constants/theme';
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+  
   return (
     <Tabs
       screenOptions={{
@@ -12,9 +15,9 @@ export default function TabLayout() {
           backgroundColor: COLORS.white,
           borderTopWidth: 1,
           borderTopColor: COLORS.border,
-          paddingBottom: 5,
-          paddingTop: 5,
-          height: 60,
+          paddingBottom: Math.max(18, insets.bottom + 8),
+          paddingTop: 12,
+          height: 78 + Math.max(0, insets.bottom - 10),
           shadowColor: COLORS.shadow,
           shadowOffset: {
             width: 0,
@@ -26,8 +29,8 @@ export default function TabLayout() {
         },
         tabBarLabelStyle: {
           fontFamily: FONT.medium,
-          fontSize: 12,
-          marginTop: 2,
+          fontSize: 13,
+          marginTop: 6,
         },
         headerShown: false,
       }}
@@ -37,7 +40,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, size, focused }) => (
-            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>🏠</Text>
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={color} />
           ),
         }}
       />
@@ -46,7 +49,7 @@ export default function TabLayout() {
         options={{
           title: 'Services',
           tabBarIcon: ({ color, size, focused }) => (
-            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>⚙️</Text>
+            <Ionicons name={focused ? 'briefcase' : 'briefcase-outline'} size={size} color={color} />
           ),
         }}
       />
@@ -55,7 +58,7 @@ export default function TabLayout() {
         options={{
           title: 'Chats',
           tabBarIcon: ({ color, size, focused }) => (
-            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>💬</Text>
+            <Ionicons name={focused ? 'chatbubbles' : 'chatbubbles-outline'} size={size} color={color} />
           ),
         }}
       />
@@ -64,7 +67,7 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, size, focused }) => (
-            <Text style={{ color, fontSize: size, fontWeight: focused ? 'bold' : 'normal' }}>👤</Text>
+            <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={color} />
           ),
         }}
       />

@@ -70,7 +70,7 @@ const clearAllData = async () => {
     <View style={styles.container}>
       {/* Logo animation */}
       <Animated.View style={{ opacity: logoOpacity }}>
-        <Image source={require('../assets/ekazi.png')} style={styles.logo} />
+        <Image source={require('../assets/new_logo.jpeg')} style={styles.logo} />
       </Animated.View>
 
       {/* Text animation */}

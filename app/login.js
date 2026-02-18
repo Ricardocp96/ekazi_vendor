@@ -35,14 +35,31 @@ export default function Login() {
       if (response.data) {
         console.log('Login successful:', response.data);
         
-        // Store user data
-        await AsyncStorage.setItem('username', response.data.username || username);
-        await AsyncStorage.setItem('providerId', response.data.id?.toString() || '');
+        // Store user data atomically so other screens can read it immediately
+        const resolvedUsername = response.data.username || username;
+        const resolvedId = response.data.id?.toString() || '';
+        const dataToPersist = [
+          ['username', resolvedUsername],
+          ['userType', 'vendor'],
+          // Maintain both "id" and "providerId" keys for backwards compatibility
+          ['providerId', resolvedId],
+          ['id', resolvedId],
+        ];
+
         if (response.data.access_token) {
-          await AsyncStorage.setItem('authToken', response.data.access_token);
+          dataToPersist.push(['authToken', response.data.access_token]);
         }
-        await AsyncStorage.setItem('userType', 'vendor');
-        
+
+        await AsyncStorage.multiSet(dataToPersist);
+
+        // Confirm storage is ready before navigating to avoid race conditions
+        const storedId = await AsyncStorage.getItem('id');
+        if (!storedId) {
+          console.warn('Login succeeded but vendor id is not yet available in storage.');
+        } else {
+          console.log('Vendor id cached in storage:', storedId);
+        }
+
         // Navigate to tabs
         router.replace('/(tabs)');
       } else {
@@ -51,8 +68,13 @@ export default function Login() {
       }
     } catch (error) {
       setLoading(false);
-      console.error('Login error:', error);
-      Alert.alert("Error", "Network error or server error occurred");
+      const message = error?.response?.data?.message || error?.message || 'Network error or server error occurred';
+      const status = error?.response?.status;
+      console.error('Login error:', { status, message, url: API_CONFIG.ENDPOINTS.PROVIDER_LOGIN });
+      Alert.alert(
+        'Login Failed',
+        status ? `(${status}) ${message}` : message
+      );
     }
   }
 
@@ -69,7 +91,7 @@ export default function Login() {
         <View style={styles.headerSection}>
           <View style={styles.logoContainer}>
             <Image
-              source={require("../assets/ekazi.png")}
+              source={require("../assets/new_logo.jpeg")}
               style={styles.logo}
               resizeMode="contain"
             />
@@ -127,6 +149,14 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
             </View>
+
+            {/* Forgot Password Link */}
+            <TouchableOpacity
+              style={styles.forgotPasswordContainer}
+              onPress={() => router.push('/Screens/ForgotPassword')}
+            >
+              <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+            </TouchableOpacity>
 
             {/* Login Button */}
             <TouchableOpacity
@@ -236,6 +266,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: SPACING.medium,
     padding: SPACING.small,
+  },
+  forgotPasswordContainer: {
+    alignItems: 'flex-end',
+    marginTop: SPACING.small,
+    marginBottom: SPACING.medium,
+  },
+  forgotPasswordText: {
+    fontSize: SIZES.small,
+    fontFamily: FONT.medium,
+    color: COLORS.primary,
   },
   loginButton: {
     backgroundColor: COLORS.primary,

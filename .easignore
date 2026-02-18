@@ -1,0 +1,44 @@
+# Android native code - exclude to let EAS regenerate with proper autolinking
+# This ensures all native modules are properly configured
+android/
+ios/
+
+# Development files
+*.bak
+*.log
+*.tmp
+
+# Documentation (not needed for build)
+*.md
+!README.md
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git (not needed for build)
+.git/
+.gitignore
+
+# EAS files (not needed in build)
+.eas/
+
+# Large test assets (if any)
+**/test/
+**/tests/
+**/__tests__/
+
+# Keystore files (handled by EAS)
+*.jks
+*.keystore
+
+# Build artifacts
+build/
+dist/

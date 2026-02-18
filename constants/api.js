@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // API Configuration
 export const API_CONFIG = {
   // Production backend URL
-  BASE_URL: 'http://52.87.203.39:3000',
+  BASE_URL: 'http://173.212.214.118:3000',
   
   // Development backend URL (if needed)
   // BASE_URL: 'http://34.170.37.228:3000',
@@ -19,9 +19,17 @@ export const API_CONFIG = {
     REFRESH_TOKEN: '/auth/refresh',
 
     // Provider auth endpoints (vendors)
-    // NOTE: If backend routes are cleaned up, these should be '/provider-auth/login' and '/provider-auth/register'
     PROVIDER_LOGIN: '/provider-auth/auth/provider/login',
-    PROVIDER_REGISTER: '/provider-auth/register/ptovider',
+    PROVIDER_REGISTER: '/provider-auth/register',
+    PROVIDER_CHANGE_PASSWORD: '/provider-auth/change-password-provider',
+    
+    // Password Reset (for regular users)
+    FORGOT_PASSWORD: '/auth/forgot-password',
+    RESET_PASSWORD: '/auth/reset-password',
+    
+    // Provider Password Reset
+    PROVIDER_FORGOT_PASSWORD: '/provider-auth/forgot-password',
+    PROVIDER_RESET_PASSWORD: '/provider-auth/reset-password',
     
     // Vendor specific endpoints (aligned to backend)
     // Providers
@@ -38,9 +46,18 @@ export const API_CONFIG = {
     SERVICE_CATEGORIES: '/services/categories',
     SERVICE_DETAILS: '/services',
     
-    // Chat and messaging
-    CHAT_ROOMS: '/chat/rooms',
-    MESSAGES: '/chat/messages',
+    // Chat and messaging (lightweight in-house messaging)
+    MESSAGES: '/messages',
+    MESSAGES_CONVERSATION: '/messages/conversation',
+    PROVIDER_CONVERSATIONS: '/messages/provider',
+    
+    // Calls
+    CALLS: '/calls',
+    CALLS_TOKEN: '/calls/token',
+    CALLS_ACTIVE: '/calls/active',
+    // Notifications
+    NOTIFICATIONS: '/notifications',
+    NOTIFICATIONS_UNREAD: '/notifications/unread-count',
   }
 };
 
@@ -83,7 +100,10 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error('API Error:', error);
+    // Don't log 404 errors as they're expected for empty results
+    if (error?.response?.status !== 404) {
+      console.error('API Error:', error);
+    }
     return Promise.reject(error);
   }
 );
@@ -97,6 +117,33 @@ export const vendorAPI = {
   
   updateProfile: async (providerId, data) => {
     return apiClient.put(`${API_CONFIG.ENDPOINTS.PROVIDERS}/${providerId}`, data);
+  },
+
+  updatePushToken: async (providerId, pushToken) => {
+    return apiClient.put(`${API_CONFIG.ENDPOINTS.PROVIDERS}/${providerId}/push-token`, {
+      pushToken,
+    });
+  },
+  
+  updateLocation: async (providerId, latitude, longitude) => {
+    return apiClient.put(`${API_CONFIG.ENDPOINTS.PROVIDERS}/${providerId}/location`, {
+      latitude,
+      longitude,
+    });
+  },
+
+  uploadLogo: async (providerId, formData) => {
+    return apiClient.put(
+      `${API_CONFIG.ENDPOINTS.PROVIDERS}/${providerId}/logo`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        transformRequest: (data) => data,
+        timeout: 120000, // 120 seconds (2 minutes) for file uploads on slower connections
+      },
+    );
   },
   
   // Services
@@ -112,8 +159,35 @@ export const vendorAPI = {
   updateService: async (serviceId, data) => {
     return apiClient.put(`${API_CONFIG.ENDPOINTS.SERVICES}/${serviceId}`, data);
   },
+  updateServiceWithImages: async (serviceId, formData) => {
+    return apiClient.put(
+      `${API_CONFIG.ENDPOINTS.SERVICES}/${serviceId}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        transformRequest: (data) => data,
+        timeout: 120000, // 120 seconds (2 minutes) for file uploads on slower connections
+      },
+    );
+  },
   deleteService: async (serviceId) => {
     return apiClient.delete(`${API_CONFIG.ENDPOINTS.SERVICES}/${serviceId}`);
+  },
+  // Multipart create with images
+  createServiceWithImages: async (formData) => {
+    return apiClient.post(
+      `${API_CONFIG.ENDPOINTS.SERVICES}/upload`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        transformRequest: (data) => data,
+        timeout: 120000, // 120 seconds (2 minutes) for file uploads on slower connections
+      },
+    );
   },
   
   // Orders & earnings (wire up when backend endpoints exist)
@@ -123,9 +197,114 @@ export const vendorAPI = {
   getEarnings: async (providerId) => {
     return apiClient.get(`/earnings?providerId=${providerId}`);
   },
-  
+
   getCategories: async () => {
     return apiClient.get(API_CONFIG.ENDPOINTS.SERVICE_CATEGORIES);
+  },
+
+  getPendingRequests: async (providerId) => {
+    return apiClient.get(`${API_CONFIG.ENDPOINTS.BOOKINGS}/unconfirmed/${providerId}`);
+  },
+
+  updateBookingStatus: async (bookingId, data) => {
+    return apiClient.patch(`${API_CONFIG.ENDPOINTS.BOOKINGS}/${bookingId}/status`, data);
+  },
+
+  getProviderBookings: async (providerId) => {
+    return apiClient.get(`${API_CONFIG.ENDPOINTS.BOOKINGS}/${providerId}/id`);
+  },
+
+  // Messaging
+  getConversation: async (userId, providerId) => {
+    return apiClient.get(
+      `${API_CONFIG.ENDPOINTS.MESSAGES_CONVERSATION}?userId=${encodeURIComponent(
+        userId,
+      )}&providerId=${encodeURIComponent(providerId)}`,
+    );
+  },
+  getProviderConversations: async (providerId) => {
+    return apiClient.get(`${API_CONFIG.ENDPOINTS.PROVIDER_CONVERSATIONS}/${providerId}`);
+  },
+  sendMessage: async ({ userId, providerId, senderType, content }) => {
+    return apiClient.post(API_CONFIG.ENDPOINTS.MESSAGES, {
+      userId,
+      providerId,
+      senderType,
+      content,
+    });
+  },
+
+  // Calls
+  createCall: async ({ userId, providerId }) => {
+    return apiClient.post(API_CONFIG.ENDPOINTS.CALLS, {
+      userId,
+      providerId,
+    });
+  },
+
+  getCall: async (callId) => {
+    return apiClient.get(`${API_CONFIG.ENDPOINTS.CALLS}/${callId}`);
+  },
+
+  generateToken: async ({ channelName, uid }) => {
+    return apiClient.post(API_CONFIG.ENDPOINTS.CALLS_TOKEN, {
+      channelName,
+      uid,
+    });
+  },
+
+  getActiveCall: async (userId, providerId) => {
+    return apiClient.get(
+      `${API_CONFIG.ENDPOINTS.CALLS_ACTIVE}?userId=${encodeURIComponent(userId)}&providerId=${encodeURIComponent(providerId)}`,
+    );
+  },
+
+  // Notifications
+  getNotifications: async ({ providerId, limit = 50 }) => {
+    return apiClient.get(
+      `${API_CONFIG.ENDPOINTS.NOTIFICATIONS}?providerId=${encodeURIComponent(providerId)}&limit=${limit}`,
+    );
+  },
+
+  getUnreadNotificationsCount: async (providerId) => {
+    try {
+      return await apiClient.get(
+        `${API_CONFIG.ENDPOINTS.NOTIFICATIONS_UNREAD}?providerId=${encodeURIComponent(providerId)}`,
+      );
+    } catch (error) {
+      if (error?.response?.status === 404) {
+        return { data: { count: 0 } };
+      }
+      throw error;
+    }
+  },
+
+  markNotificationsRead: async ({ providerId, ids }) => {
+    return apiClient.patch(`${API_CONFIG.ENDPOINTS.NOTIFICATIONS}/read`, {
+      providerId,
+      ids,
+    });
+  },
+
+  // Password Reset
+  requestPasswordReset: async (usernameOrEmail) => {
+    return apiClient.post(API_CONFIG.ENDPOINTS.PROVIDER_FORGOT_PASSWORD, {
+      usernameOrEmail,
+    });
+  },
+
+  resetPassword: async ({ token, newPassword }) => {
+    return apiClient.post(API_CONFIG.ENDPOINTS.PROVIDER_RESET_PASSWORD, {
+      token,
+      newPassword,
+    });
+  },
+
+  changePassword: async ({ oldPassword, newPassword }) => {
+    return apiClient.patch(API_CONFIG.ENDPOINTS.PROVIDER_CHANGE_PASSWORD, {
+      oldPassword,
+      newPassword,
+    });
   },
 };
 

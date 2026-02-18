@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "eKazi Vendor",
+    "name": "eCazi Vendor",
     "slug": "eVendor",
     "version": "1.0.0.4",
     "runtimeVersion": "1.0.0.4",
     "orientation": "portrait",
-    "icon": "./assets/Image_eKazi.png",
+    "icon": "./assets/new_logo.jpeg",
     "scheme": "ekazi-vendor",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/new_logo.jpeg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,27 +20,56 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.ricardo96.ekazi.vendor",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Your location is used to prefill your address during registration."
+        "NSLocationWhenInUseUsageDescription": "Your location is used to prefill your address during registration.",
+        "NSCameraUsageDescription": "Allow eKazi Vendor to use your camera for service images.",
+        "NSPhotoLibraryUsageDescription": "Allow eKazi Vendor to access your photo library for service uploads.",
+        "NSMicrophoneUsageDescription": "This app needs access to your microphone to make voice calls.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSExceptionDomains": {
+            "173.212.214.118": {
+              "NSTemporaryExceptionAllowsInsecureHTTPLoads": true,
+              "NSIncludesSubdomains": false
+            }
+          }
+        }
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/new_logo.jpeg",
         "backgroundColor": "#ffffff"
       },
       "package": "com.ricardo96.ekazi.vendor",
+      "versionCode": 20,
       "permissions": [
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.VIBRATE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/new_logo.jpeg"
     },
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-location"
+      "expo-location",
+      "./plugins/withAndroidSupportExclusions",
+      "./plugins/strip-media-permissions",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
     ],
     "extra": {
       "router": {

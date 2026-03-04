@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, TextInput,ActivityIndicator,Image,Text} from 'react-native';
 
-
 export  default function ChannelListScreen (){
 return (
   
@@ -13,7 +12,6 @@ return (
 </View>
 
 )
-
 }
 
 const styles = StyleSheet.create({
@@ -37,3 +35,16 @@ const styles = StyleSheet.create({
     maxWidth: '80%', // Adjust as needed
   },
 });
+
+
+
+
+
+
+
+
+
+
+
+
+

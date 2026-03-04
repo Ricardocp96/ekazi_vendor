@@ -155,6 +155,61 @@ export default function Service({ initialCreate = false, onCreateHandled }) {
     });
   }, [vendorLocation, editingService]);
 
+  // Image quality governance constants
+  const IMAGE_RULES = {
+    MIN_WIDTH: 1000,
+    MIN_HEIGHT: 750,
+    MIN_FILE_SIZE: 80 * 1024, // 80 KB
+    MAX_FILE_SIZE: 5 * 1024 * 1024, // 5 MB
+    MIN_ASPECT_RATIO: 4 / 3, // ~1.33
+    MAX_ASPECT_RATIO: 16 / 9, // ~1.78
+    ALLOWED_EXTENSIONS: ['jpg', 'jpeg', 'png'],
+  };
+
+  const validateImageQuality = (asset) => {
+    const { width, height, fileSize, uri } = asset;
+
+    if (width < IMAGE_RULES.MIN_WIDTH || height < IMAGE_RULES.MIN_HEIGHT) {
+      return {
+        valid: false,
+        message: `Image is too small. Please use a photo at least ${IMAGE_RULES.MIN_WIDTH}×${IMAGE_RULES.MIN_HEIGHT} pixels so customers can clearly see your service.`,
+      };
+    }
+
+    const aspectRatio = width / height;
+    if (aspectRatio < IMAGE_RULES.MIN_ASPECT_RATIO || aspectRatio > IMAGE_RULES.MAX_ASPECT_RATIO) {
+      return {
+        valid: false,
+        message: 'Image aspect ratio should be between 4:3 and 16:9 for best display.',
+      };
+    }
+
+    if (fileSize != null) {
+      if (fileSize < IMAGE_RULES.MIN_FILE_SIZE) {
+        return {
+          valid: false,
+          message: 'Image file is too small and may look blurry. Please choose a higher quality photo.',
+        };
+      }
+      if (fileSize > IMAGE_RULES.MAX_FILE_SIZE) {
+        return {
+          valid: false,
+          message: 'Image is too large. Please select a photo smaller than 5 MB.',
+        };
+      }
+    }
+
+    const ext = (uri?.split('.').pop() || '').toLowerCase();
+    if (ext && !IMAGE_RULES.ALLOWED_EXTENSIONS.includes(ext) && ext !== 'heic') {
+      return {
+        valid: false,
+        message: 'Please use a JPEG or PNG image.',
+      };
+    }
+
+    return { valid: true };
+  };
+
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -163,9 +218,19 @@ export default function Service({ initialCreate = false, onCreateHandled }) {
       quality: 0.8,
     });
 
-    if (!result.canceled) {
-      setSelectedImage(result.assets[0].uri);
+    if (result.canceled) {
+      return;
     }
+
+    const asset = result.assets[0];
+    const validation = validateImageQuality(asset);
+
+    if (!validation.valid) {
+      Alert.alert('Image quality check', validation.message);
+      return;
+    }
+
+    setSelectedImage(asset.uri);
   };
 
   const handleSubmit = async () => {
